@@ -9,7 +9,7 @@ export const Burger = (props) => {
             <p>Toppings:</p>
             <ul>
                 { props.toppings.map((topping, index)=> {
-                    return (<li key={ index }>{ topping }</li>);
+                    return (<li key={ index }>{ topping.name }</li>);
                 }) }
             </ul>
         </div>    

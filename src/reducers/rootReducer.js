@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 
-const burgers = (state=[], action) => {
+const burgers = (state={burgerList: []}, action) => {
     switch(action.type){
+        case 'RECEIVE_BURGERS':
+            return Object.assign({}, {burgerList: action.payload})
+        case 'CLEAR_BURGERS':
+            return Object.assign({}, {burgerList: []})
         default:
             return state;
     }

@@ -1,4 +1,8 @@
 import React from 'react';
+import { addBurger } from '../actions/burgerActions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 class BurgerForm extends React.Component {
     constructor(props) {
 
@@ -13,6 +17,7 @@ class BurgerForm extends React.Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.submitTopping = this.submitTopping.bind(this);
+        this.submitBurger = this.submitBurger.bind(this);
     }
 
     handleInputChange(event){
@@ -25,15 +30,31 @@ class BurgerForm extends React.Component {
         })
     }
     
-    submitBurger(){
-
+    submitBurger(event){
+        if(!this.state.name) {
+            alert('Your burger needs a name')
+            return;
+        }
+        event.preventDefault();
+        this.props.addBurger({
+            name: this.state.name,
+            has_bun: this.state.hasBun,
+            has_patty: this.state.hasPatty,
+            toppings: this.state.toppings
+        })
+        this.setState = {
+            name: null,
+            hasBun: true,
+            hasPatty: true,
+            toppings: []
+        }
     }
 
     submitTopping(event){
         event.preventDefault();
         const newTopping = {name: this.state.newTopping};
         if(this.state.toppings.filter(topping => topping.name === newTopping.name).length > 0){
-            alert(`You alread have ${newTopping.name} on your burger!`);
+            alert(`You already have ${newTopping.name} on your burger!`);
             return;
         } else {
             const toppingArr = [...this.state.toppings];
@@ -64,17 +85,22 @@ class BurgerForm extends React.Component {
                 </p>
                 <div>
                     Toppings:
-                    <ul>
+                    <div>
                         {this.state.toppings.map((topping, index)=>{
-                            return(<li key={index}>{topping.name}</li>)
+                            return(<div key={index}>{topping.name}</div>)
                         })}
-                    </ul>
+                    </div>
                     <input type='text' placeholder='Add a Topping!' name='newTopping' onChange={this.handleInputChange} />
                     <button onClick={this.submitTopping}>Add Topping</button>
                 </div>
+                <input type='submit' value='Cook this burger!' />
             </form>
         )
     }
 }
 
-export default BurgerForm;
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({addBurger: addBurger}, dispatch)
+  }
+
+export default connect(null, mapDispatchToProps)(BurgerForm);

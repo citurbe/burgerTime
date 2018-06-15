@@ -6,8 +6,11 @@ import { Provider } from 'react-redux';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import configureStore from './store/createStore';
 import { Welcome } from './components/welcome';
-import { Search } from './components/search';
+import Search from './components/search';
+import { ConnectedRouter } from 'connected-react-router'
+import { history } from './store/createStore';
 import './App.css';
+import { Trashed } from './components/trashed';
 
 const store = configureStore();
 
@@ -22,15 +25,15 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">It's Burger Time!</h1>
         </header>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
           <Switch>
             <Route exact path="/" component={Welcome} />
             <Route path ="/search" component={Search} />
-            <Route path ="/list" component={BurgerList} />
             <Route path="/new" component={BurgerForm} />
+            <Route path ="/trashed" component = {Trashed} />
           </Switch>
-        </BrowserRouter>
-      </div>
+        </ConnectedRouter>
+        </div>
       </Provider>
     );
   }
