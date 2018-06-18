@@ -4,6 +4,9 @@ const API_URL = 'http://ec2-54-152-121-162.compute-1.amazonaws.com/api/burgers/'
 const TOPPING_URL = 'http://ec2-54-152-121-162.compute-1.amazonaws.com/api/toppings/';
 
 export const receiveBurgers = (burgers) => {
+    if(burgers.length === 0){
+        alert('There are no burgers with that topping.')
+    }
     return {type:'RECEIVE_BURGERS', payload: burgers}
 }
 
@@ -54,7 +57,7 @@ export const searchBurgers = (param) => {
               return res.json()
         })
         .then(data => {
-            const filteredData;
+            let filteredData;
             if(param === 'none'){
                 filteredData = data.filter(burger =>{
                     return burger.toppings.length === 0;
