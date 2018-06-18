@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const StyledDiv = styled.div`
+    margin-top: 10px;
+`
 
 export const Welcome = () => {
     return(
-        <div>
-            Welcome! How can I help you?
-            <Link to="/search">Search for Burgers!</Link>
-            <Link to="/new">Make a New Burger!</Link>
-        </div>
+        <StyledDiv>
+            Welcome! Choose a link above to begin.
+        </StyledDiv>
     )
 }
